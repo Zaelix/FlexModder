@@ -54,6 +54,7 @@
     <Compile Include="FlexModder.Designer.cs">
       <DependentUpon>FlexModder.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FlexModder.resx">
