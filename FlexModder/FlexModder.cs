@@ -13,6 +13,7 @@ namespace FlexModder
     public partial class MainFormWindow : Form
     {
         String[] argsArr;
+        String objArgs = "";
         List<ModObject> modObjList = new List<ModObject>();
 
         public MainFormWindow()
@@ -48,7 +49,6 @@ namespace FlexModder
         {
             String objType = "???";
             String objName = "???";
-            String args = "";
             
             // Simple Check for Object Type
             if (AddToModTextBox.Text.Contains("AddBlock"))
@@ -62,6 +62,10 @@ namespace FlexModder
             else if (AddToModTextBox.Text.Contains("AddBow"))
             {
                 objType = "Bow";
+            }
+            else if (AddToModTextBox.Text.Contains("AddMaterial"))
+            {
+                objType = "Material";
             }
             else {
                 objType = "???";
@@ -83,8 +87,8 @@ namespace FlexModder
                 }
                 int argsLength = Math.Max(argsEnd - argsStart, 0);
 
-                args = AddToModTextBox.Text.Substring(argsStart, argsLength);
-                argsArr = args.Split(',');
+                objArgs = AddToModTextBox.Text.Substring(argsStart, argsLength);
+                argsArr = objArgs.Split(',');
 
                 // Name Sanity Check
                 if (argsArr[0] == "\"\"" || argsArr[0] == "")
@@ -101,7 +105,7 @@ namespace FlexModder
             }
             ObjectNameTextBox.Text = objName;
 
-            CheckForAddObjectErrors();
+            CheckForAddErrors();
             if (ErrorLabel.Text == "No Errors")
             {
                 AddToModButton.Enabled = true;
@@ -113,15 +117,14 @@ namespace FlexModder
 
         }
 
-        private void CheckForAddObjectErrors()
-        {
-
+        private void CheckForAddErrors() {
             if (!AddToModTextBox.Text.StartsWith("Add"))
             {
                 ErrorLabel.Text = "We have to say what we want to do. Right now, we want to \"Add\" a Mod Object!";
                 ErrorPanel.BackColor = Color.Red;
             }
-            else if (ObjectTypeTextBox.Text == "???") {
+            else if (ObjectTypeTextBox.Text == "???")
+            {
                 ErrorLabel.Text = "You haven't given an Object type! A 'Block' is an example of a type.";
                 ErrorPanel.BackColor = Color.Red;
             }
@@ -135,23 +138,43 @@ namespace FlexModder
                 ErrorLabel.Text = "You haven't given an Object name. Don't forget to put it in \"Quotes\"!";
                 ErrorPanel.BackColor = Color.Red;
             }
-            else if (argsArr[0] == "")
+            else if (argsArr[0] == "" || argsArr[0] == "\"\"")
             {
                 ErrorLabel.Text = "Your name has no letters in it!";
                 ErrorPanel.BackColor = Color.Red;
             }
-            else if (!argsArr[0].StartsWith("\"") || !argsArr[0].EndsWith("\"")) {
+            else if (argsArr[0] == "\"")
+            {
+                ErrorLabel.Text = "You have no ending quotes!";
+                ErrorPanel.BackColor = Color.Red;
+            }
+            else if (!argsArr[0].StartsWith("\"") || !argsArr[0].EndsWith("\""))
+            {
                 ErrorLabel.Text = "Your name isn't in \"quotes\"!";
                 ErrorPanel.BackColor = Color.Red;
             }
-            else if (!AddToModTextBox.Text.EndsWith(")") && !AddToModTextBox.Text.EndsWith(");"))
+            // Diverges for Materials and advanced Object error handling
+            else if (ObjectTypeTextBox.Text == "Material")
+            {
+                CheckForAddMaterialErrors();
+            }
+            else if(ObjectTypeTextBox.Text != "???" && argsArr.Length > 1) {
+                CheckForAddObjectErrors();
+            }
+            // Resumes common line ending error handling
+            else if (AddToModTextBox.Text.Contains(")") && (!AddToModTextBox.Text.EndsWith(")") && !AddToModTextBox.Text.EndsWith(");")))
+            {
+                ErrorLabel.Text = "You have stuff after the closing parenthesis, ')', that shouldn't be there!";
+                ErrorPanel.BackColor = Color.Red;
+            }
+            else if (!AddToModTextBox.Text.Contains(")") && (!AddToModTextBox.Text.EndsWith(")") && !AddToModTextBox.Text.EndsWith(");")))
             {
                 ErrorLabel.Text = "You're missing a closing parenthesis, ')'!";
                 ErrorPanel.BackColor = Color.Red;
             }
             else if (!AddToModTextBox.Text.EndsWith(";"))
             {
-                ErrorLabel.Text = "You're missing a semicolon, ';'! It should be after the other stuff you've written.";
+                ErrorLabel.Text = "You're missing a semicolon, ';'! It should be after all the other stuff you've written.";
                 ErrorPanel.BackColor = Color.Red;
             }
             else
@@ -161,12 +184,59 @@ namespace FlexModder
             }
         }
 
+        private void CheckForAddObjectErrors()
+        {
+            
+        }
+
+        private void CheckForAddMaterialErrors() {
+            if (argsArr.Length == 1)
+            {
+                ErrorLabel.Text = "You're missing a comma, ','! We need a comma after our material's name to tell the computer we're making a list.";
+                ErrorPanel.BackColor = Color.Red;
+            }
+        }
+
         private void AddToModButton_Click(object sender, EventArgs e)
         {
+            // Captures the object properties
+            String name = ObjectNameTextBox.Text;
+            String type = ObjectTypeTextBox.Text;
+
+            // Adds the new object to the summary
             modObjList.Add(new ModObject(ObjectNameTextBox.Text, ObjectTypeTextBox.Text));
-            ListViewItem lvi = new ListViewItem(ObjectNameTextBox.Text, ObjectTypeTextBox.Text);
+            String[] lviArr = { ObjectNameTextBox.Text, ObjectTypeTextBox.Text };
+            ListViewItem lvi = new ListViewItem(lviArr);
             lvi.Group = ModSummaryListViewBox.Groups[0];
             ModSummaryListViewBox.Items.Add(lvi);
+
+            // Makes the relevant changes to the Forge Mod source files
+            if (type == "Block")
+            {
+                FlexMod.addObject(name, "Block", type, " ");
+            }
+            else if (type == "Sword")
+            {
+                if (argsArr.Length > 1)
+                {
+                    FlexMod.addObject(name, "Item", type, argsArr[1]);
+                }
+                else
+                {
+                    FlexMod.addObject(name, "Item", type, " ");
+                }
+            }
+            else if (type == "Bow")
+            {
+                FlexMod.addObject(name, "Item", type, " ");
+            }
+            else if (type == "Material" && argsArr.Length > 5)
+            {
+                FlexMod.addMaterial(name, int.Parse(argsArr[1]), int.Parse(argsArr[2]), int.Parse(argsArr[3]), int.Parse(argsArr[4]), int.Parse(argsArr[5]));
+            }
+
+            // Clears the Add text input field
+            AddToModTextBox.Text = "";
         }
     }
 }

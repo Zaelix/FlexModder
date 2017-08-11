@@ -113,6 +113,7 @@
             // 
             // AddToModTextBox
             // 
+            this.AddToModTextBox.BackColor = System.Drawing.Color.Gold;
             this.AddToModTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AddToModTextBox.Location = new System.Drawing.Point(306, 64);
             this.AddToModTextBox.Name = "AddToModTextBox";
@@ -141,12 +142,12 @@
             this.ObjectTypeLabel.TabIndex = 5;
             this.ObjectTypeLabel.Text = "Object Type:";
             // 
-            // ObjectTypeTextBox
+            // ObjectClassTextBox
             // 
             this.ObjectTypeTextBox.Enabled = false;
             this.ObjectTypeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ObjectTypeTextBox.Location = new System.Drawing.Point(421, 116);
-            this.ObjectTypeTextBox.Name = "ObjectTypeTextBox";
+            this.ObjectTypeTextBox.Name = "ObjectClassTextBox";
             this.ObjectTypeTextBox.Size = new System.Drawing.Size(100, 26);
             this.ObjectTypeTextBox.TabIndex = 6;
             this.ObjectTypeTextBox.Text = "???";

@@ -47,14 +47,15 @@ namespace FlexModder
 
             String lineContents = "";
             lineContents = sr.ReadLine();
-            while (sr.Peek() >= 0)
+            while (sr.Peek() > -1)
             {
                 if (number_of_lines >= num){
 				    fileContent = fileContent + lineContents + "\n";
-			    }
+                }
                 number_of_lines++;
                 lineContents = sr.ReadLine();
             }
+            fileContent = fileContent + lineContents + "\n";
             sr.Close();
 		    return fileContent;
 	    }
@@ -153,8 +154,9 @@ namespace FlexModder
             findFiles();
             String typeFile;
             String initInsertEnd;
+            String nameSanitized = name.ToLower().Replace(" ", "").Replace("Sword", "").Replace("Block", "").Replace("Bow", "").Replace("sword", "").Replace("block", "").Replace("bow", "");
 
-		    if (material == " "){
+            if (material == " "){
                 material = "WAFFLETOOL";
             }
 		
@@ -175,32 +177,41 @@ namespace FlexModder
                 initInsertEnd = "";
             }
 
-            // Block Strings
-            String nameLower = name.ToLower();
+            // Block Strings;
             String decSearchString = category + " Declaration Space";
-            String decInsertString = "	public static " + category + " " + nameLower + type + ";";
+            String decInsertString = "	public static " + category + " " + nameSanitized + type + ";";
 
             String initSearchString = category + " Initialization Space";
-            String initInsertString = "		"+ nameLower + type + " = new " + name + type + initInsertEnd;
+            String initInsertString = "		"+ nameSanitized + type + " = new " + name + type + initInsertEnd;
 
             String regSearchString = category + " Registration Space";
-            String regInsertString = "		GameRegistry.register" + category + "(" + nameLower + type + ", " + nameLower + type + ".getUnlocalizedName());";
+            String regInsertString = "		GameRegistry.register" + category + "(" + nameSanitized + type + ", " + nameSanitized + type + ".getUnlocalizedName());";
+            Object[] temp;
+            String fileContent = "";
+            int num = 0;
 
-            Object []
-            temp = findInsertingSpace(typeFile, name, decSearchString, decInsertString, 0, "");
-            String fileContent = (String)temp [0];
+            if (!isRedundant(typeFile, decInsertString))
+            {
+                temp = findInsertingSpace(typeFile, name, decSearchString, decInsertString, 0, "");
+                fileContent = (String)temp[0];
+                num = (int)temp[1];
+            }
 
-            int num = (int)temp[1];
+            if (!isRedundant(typeFile, initInsertString))
+            {
+                //System.out.println("Finding " + blockInitSearchString + "...");
+                temp = findInsertingSpace(typeFile, name, initSearchString, initInsertString, num, fileContent);
+                fileContent = (String)temp[0];
+                num = (int)temp[1];
+            }
 
-            //System.out.println("Finding " + blockInitSearchString + "...");
-            temp = findInsertingSpace(typeFile, name, initSearchString, initInsertString, num, fileContent);
-            fileContent = (String)temp[0];
-		    num = (int)temp[1];
-		
-		    //System.out.println("Finding " + blockRegSearchString + "...");
-		    temp = findInsertingSpace(typeFile, name, regSearchString, regInsertString, num, fileContent);
-            fileContent = (String)temp[0];
-		    num = (int)temp[1];
+            if (!isRedundant(typeFile, regInsertString))
+            {
+                //System.out.println("Finding " + blockRegSearchString + "...");
+                temp = findInsertingSpace(typeFile, name, regSearchString, regInsertString, num, fileContent);
+                fileContent = (String)temp[0];
+                num = (int)temp[1];
+            }
 		
 		    fileContent = finishRead(typeFile, num, fileContent);
 		
@@ -215,13 +226,13 @@ namespace FlexModder
             }
             //System.out.println("Creating " + type + " Class file...");
 		    if (type == "Block"){
-                writeFile(campPath + "/" + category.ToLower() + "/" + name + type + ".java", FlexModContent.createNewBlock(name));
+                writeFile(campPath + "/" + category.ToLower() + "/" + nameSanitized + type + ".java", FlexModContent.createNewBlock(name, nameSanitized));
 		    }
 		    else if (type == "Sword"){
-                writeFile(campPath + "/" + category.ToLower() + "/" + name + type + ".java", FlexModContent.createNewSword(name));
+                writeFile(campPath + "/" + category.ToLower() + "/" + nameSanitized + type + ".java", FlexModContent.createNewSword(name, nameSanitized));
 		    }
 		    else if (type == "Bow"){
-                writeFile(campPath + "/" + category.ToLower() + "/" + name + type + ".java", FlexModContent.createNewBow(name));
+                writeFile(campPath + "/" + category.ToLower() + "/" + nameSanitized + type + ".java", FlexModContent.createNewBow(name, nameSanitized));
 		    }
 	    }
 
