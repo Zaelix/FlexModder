@@ -54,21 +54,26 @@ namespace FlexModder
             if (AddToModTextBox.Text.Contains("AddBlock"))
             {
                 objType = "Block";
+                MaterialPanel.Visible = false;
             }
             else if (AddToModTextBox.Text.Contains("AddSword"))
             {
                 objType = "Sword";
+                MaterialPanel.Visible = false;
             }
             else if (AddToModTextBox.Text.Contains("AddBow"))
             {
                 objType = "Bow";
+                MaterialPanel.Visible = false;
             }
             else if (AddToModTextBox.Text.Contains("AddMaterial"))
             {
                 objType = "Material";
+                MaterialPanel.Visible = true;
             }
             else {
                 objType = "???";
+                MaterialPanel.Visible = false;
             }
             ObjectTypeTextBox.Text = objType;
 
@@ -89,6 +94,8 @@ namespace FlexModder
 
                 objArgs = AddToModTextBox.Text.Substring(argsStart, argsLength);
                 argsArr = objArgs.Split(',');
+
+                UpdateArgumentTextBoxes();
 
                 // Name Sanity Check
                 if (argsArr[0] == "\"\"" || argsArr[0] == "")
@@ -115,6 +122,12 @@ namespace FlexModder
                 AddToModButton.Enabled = false;
             }
 
+        }
+
+        private void UpdateArgumentTextBoxes() {
+            if (argsArr.Length > 1) {
+                HarvestLevelTextBox.Text = (argsArr[1] != "" && argsArr[1] != " ") ? argsArr[1] : "???";
+            }
         }
 
         private void CheckForAddErrors() {
@@ -190,9 +203,19 @@ namespace FlexModder
         }
 
         private void CheckForAddMaterialErrors() {
-            if (argsArr.Length == 1)
+            if (argsArr.Length == 1 && !AddToModTextBox.Text.EndsWith(","))
             {
                 ErrorLabel.Text = "You're missing a comma, ','! We need a comma after our material's name to tell the computer we're making a list.";
+                ErrorPanel.BackColor = Color.Red;
+            }
+            else if ((!argsArr[1].Replace(" ", "").All(Char.IsDigit) && argsArr[1].Replace(" ", "").Length > 1) || (argsArr.Length == 2 && AddToModTextBox.Text.EndsWith(",") && argsArr[1].Length == 0))
+            {
+                ErrorLabel.Text = "The second thing in the list should be a number, usually between 1 and 3.";
+                ErrorPanel.BackColor = Color.Red;
+            }
+            else if (argsArr[1].Replace(" ", "").All(Char.IsDigit) && !AddToModTextBox.Text.EndsWith(","))
+            {
+                ErrorLabel.Text = "We need another comma after our number to tell the computer we're giving it another number.";
                 ErrorPanel.BackColor = Color.Red;
             }
         }

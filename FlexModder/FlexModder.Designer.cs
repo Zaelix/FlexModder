@@ -47,7 +47,11 @@
             this.ObjectNameLabel = new System.Windows.Forms.Label();
             this.ErrorPanel = new System.Windows.Forms.Panel();
             this.ErrorLabel = new System.Windows.Forms.Label();
+            this.MaterialPanel = new System.Windows.Forms.Panel();
+            this.HarvestLevelTextBox = new System.Windows.Forms.TextBox();
+            this.HarvestLevelLabel = new System.Windows.Forms.Label();
             this.ErrorPanel.SuspendLayout();
+            this.MaterialPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // ModSummaryLabel
@@ -136,18 +140,18 @@
             // 
             this.ObjectTypeLabel.AutoSize = true;
             this.ObjectTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ObjectTypeLabel.Location = new System.Drawing.Point(306, 119);
+            this.ObjectTypeLabel.Location = new System.Drawing.Point(310, 119);
             this.ObjectTypeLabel.Name = "ObjectTypeLabel";
             this.ObjectTypeLabel.Size = new System.Drawing.Size(109, 20);
             this.ObjectTypeLabel.TabIndex = 5;
             this.ObjectTypeLabel.Text = "Object Type:";
             // 
-            // ObjectClassTextBox
+            // ObjectTypeTextBox
             // 
             this.ObjectTypeTextBox.Enabled = false;
             this.ObjectTypeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ObjectTypeTextBox.Location = new System.Drawing.Point(421, 116);
-            this.ObjectTypeTextBox.Name = "ObjectClassTextBox";
+            this.ObjectTypeTextBox.Location = new System.Drawing.Point(430, 116);
+            this.ObjectTypeTextBox.Name = "ObjectTypeTextBox";
             this.ObjectTypeTextBox.Size = new System.Drawing.Size(100, 26);
             this.ObjectTypeTextBox.TabIndex = 6;
             this.ObjectTypeTextBox.Text = "???";
@@ -191,11 +195,42 @@
             this.ErrorLabel.TabIndex = 0;
             this.ErrorLabel.Text = "We have to say what we want to do. Right now, we want to \"Add\" a Mod Object!";
             // 
+            // MaterialPanel
+            // 
+            this.MaterialPanel.Controls.Add(this.HarvestLevelTextBox);
+            this.MaterialPanel.Controls.Add(this.HarvestLevelLabel);
+            this.MaterialPanel.Location = new System.Drawing.Point(306, 153);
+            this.MaterialPanel.Name = "MaterialPanel";
+            this.MaterialPanel.Size = new System.Drawing.Size(666, 343);
+            this.MaterialPanel.TabIndex = 10;
+            this.MaterialPanel.Visible = false;
+            // 
+            // HarvestLevelTextBox
+            // 
+            this.HarvestLevelTextBox.Enabled = false;
+            this.HarvestLevelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestLevelTextBox.Location = new System.Drawing.Point(124, 16);
+            this.HarvestLevelTextBox.Name = "HarvestLevelTextBox";
+            this.HarvestLevelTextBox.Size = new System.Drawing.Size(100, 26);
+            this.HarvestLevelTextBox.TabIndex = 8;
+            this.HarvestLevelTextBox.Text = "???";
+            // 
+            // HarvestLevelLabel
+            // 
+            this.HarvestLevelLabel.AutoSize = true;
+            this.HarvestLevelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestLevelLabel.Location = new System.Drawing.Point(3, 19);
+            this.HarvestLevelLabel.Name = "HarvestLevelLabel";
+            this.HarvestLevelLabel.Size = new System.Drawing.Size(123, 20);
+            this.HarvestLevelLabel.TabIndex = 7;
+            this.HarvestLevelLabel.Text = "Harvest Level:";
+            // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 614);
+            this.Controls.Add(this.MaterialPanel);
             this.Controls.Add(this.ErrorPanel);
             this.Controls.Add(this.ObjectNameTextBox);
             this.Controls.Add(this.ObjectNameLabel);
@@ -212,6 +247,8 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ErrorPanel.ResumeLayout(false);
             this.ErrorPanel.PerformLayout();
+            this.MaterialPanel.ResumeLayout(false);
+            this.MaterialPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,6 +269,9 @@
         private System.Windows.Forms.Label ObjectNameLabel;
         private System.Windows.Forms.Panel ErrorPanel;
         private System.Windows.Forms.Label ErrorLabel;
+        private System.Windows.Forms.Panel MaterialPanel;
+        private System.Windows.Forms.TextBox HarvestLevelTextBox;
+        private System.Windows.Forms.Label HarvestLevelLabel;
     }
 }
 
