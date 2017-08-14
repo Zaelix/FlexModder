@@ -54,26 +54,21 @@ namespace FlexModder
             if (AddToModTextBox.Text.Contains("AddBlock"))
             {
                 objType = "Block";
-                MaterialPanel.Visible = false;
             }
             else if (AddToModTextBox.Text.Contains("AddSword"))
             {
                 objType = "Sword";
-                MaterialPanel.Visible = false;
             }
             else if (AddToModTextBox.Text.Contains("AddBow"))
             {
                 objType = "Bow";
-                MaterialPanel.Visible = false;
             }
             else if (AddToModTextBox.Text.Contains("AddMaterial"))
             {
                 objType = "Material";
-                MaterialPanel.Visible = true;
             }
             else {
                 objType = "???";
-                MaterialPanel.Visible = false;
             }
             ObjectTypeTextBox.Text = objType;
 
@@ -113,111 +108,187 @@ namespace FlexModder
             ObjectNameTextBox.Text = objName;
 
             CheckForAddErrors();
-            if (ErrorLabel.Text == "No Errors")
+            if (ErrorLabel.Text == "No Errors Found")
             {
+                ErrorPanel.BackColor = Color.Lime;
                 AddToModButton.Enabled = true;
             }
             else
             {
+                ErrorPanel.BackColor = Color.Red;
                 AddToModButton.Enabled = false;
             }
 
         }
 
         private void UpdateArgumentTextBoxes() {
-            if (argsArr.Length > 1) {
-                HarvestLevelTextBox.Text = (argsArr[1] != "" && argsArr[1] != " ") ? argsArr[1] : "???";
+            ModObjectLabel.Text = "Mod Object Details - Argument Count: " + argsArr.Length;
+            if (argsArr.Length > 1)
+            {
+                MaterialPanel.Visible = true;
+                HarvestLevelTextBox.Text = (argsArr[1] != "" && argsArr[1] != " ") ? argsArr[1].Replace(" ", "") : "???";
+            }
+            if (argsArr.Length > 2)
+            {
+                DurabilityTextBox.Text = !string.IsNullOrWhiteSpace(argsArr[2]) ? argsArr[2].Replace(" ", "") : "???";
+            }
+            else if (argsArr.Length == 1)
+            {
+                MaterialPanel.Visible = false;
             }
         }
 
         private void CheckForAddErrors() {
+            bool argsAreComplete = false;
             if (!AddToModTextBox.Text.StartsWith("Add"))
             {
                 ErrorLabel.Text = "We have to say what we want to do. Right now, we want to \"Add\" a Mod Object!";
-                ErrorPanel.BackColor = Color.Red;
             }
             else if (ObjectTypeTextBox.Text == "???")
             {
                 ErrorLabel.Text = "You haven't given an Object type! A 'Block' is an example of a type.";
-                ErrorPanel.BackColor = Color.Red;
             }
             else if (!AddToModTextBox.Text.Contains("("))
             {
                 ErrorLabel.Text = "You're missing an opening parenthesis, '('!";
-                ErrorPanel.BackColor = Color.Red;
             }
             else if (ObjectNameTextBox.Text == "???")
             {
                 ErrorLabel.Text = "You haven't given an Object name. Don't forget to put it in \"Quotes\"!";
-                ErrorPanel.BackColor = Color.Red;
             }
             else if (argsArr[0] == "" || argsArr[0] == "\"\"")
             {
                 ErrorLabel.Text = "Your name has no letters in it!";
-                ErrorPanel.BackColor = Color.Red;
             }
             else if (argsArr[0] == "\"")
             {
                 ErrorLabel.Text = "You have no ending quotes!";
-                ErrorPanel.BackColor = Color.Red;
             }
             else if (!argsArr[0].StartsWith("\"") || !argsArr[0].EndsWith("\""))
             {
                 ErrorLabel.Text = "Your name isn't in \"quotes\"!";
-                ErrorPanel.BackColor = Color.Red;
             }
             // Diverges for Materials and advanced Object error handling
             else if (ObjectTypeTextBox.Text == "Material")
             {
-                CheckForAddMaterialErrors();
+                argsAreComplete = CheckForAddMaterialErrors();
             }
-            else if(ObjectTypeTextBox.Text != "???" && argsArr.Length > 1) {
-                CheckForAddObjectErrors();
+            else if (ObjectTypeTextBox.Text != "???" && argsArr.Length > 1)
+            {
+                argsAreComplete = CheckForAddObjectErrors();
+            }
+            else {
+                argsAreComplete = true;
             }
             // Resumes common line ending error handling
-            else if (AddToModTextBox.Text.Contains(")") && (!AddToModTextBox.Text.EndsWith(")") && !AddToModTextBox.Text.EndsWith(");")))
+            if (argsAreComplete)
             {
-                ErrorLabel.Text = "You have stuff after the closing parenthesis, ')', that shouldn't be there!";
-                ErrorPanel.BackColor = Color.Red;
-            }
-            else if (!AddToModTextBox.Text.Contains(")") && (!AddToModTextBox.Text.EndsWith(")") && !AddToModTextBox.Text.EndsWith(");")))
-            {
-                ErrorLabel.Text = "You're missing a closing parenthesis, ')'!";
-                ErrorPanel.BackColor = Color.Red;
-            }
-            else if (!AddToModTextBox.Text.EndsWith(";"))
-            {
-                ErrorLabel.Text = "You're missing a semicolon, ';'! It should be after all the other stuff you've written.";
-                ErrorPanel.BackColor = Color.Red;
-            }
-            else
-            {
-                ErrorLabel.Text = "No Errors";
-                ErrorPanel.BackColor = Color.Lime;
+
+                if (!AddToModTextBox.Text.Contains(")"))
+                {
+                    ErrorLabel.Text = "You're missing a closing parenthesis, ')'!";
+                }
+                else if (AddToModTextBox.Text.Contains(")") && (!AddToModTextBox.Text.EndsWith(")") && !AddToModTextBox.Text.EndsWith(");")))
+                {
+                    ErrorLabel.Text = "You have stuff after the closing parenthesis, ')', that shouldn't be there!";
+                }
+                else if (!AddToModTextBox.Text.EndsWith(";"))
+                {
+                    ErrorLabel.Text = "You're missing a semicolon, ';'! It should be after all the other stuff you've written.";
+                }
+                else if (ParenthesisCount() > 1)
+                {
+                    string source = AddToModTextBox.Text;
+                    int count = 0;
+                    foreach (char c in source)
+                        if (c == ')') count++;
+                    if (count > 1) {
+                        ErrorLabel.Text = "You have an extra closing parenthesis, ')', in your line of code!";
+                    }
+                }
+                else
+                {
+                    ErrorLabel.Text = "No Errors Found";
+                }
             }
         }
 
-        private void CheckForAddObjectErrors()
+        private int ParenthesisCount() {
+            string source = AddToModTextBox.Text;
+            int count = 0;
+            foreach (char c in source)
+                if (c == ')') count++;
+            return count;
+        }
+
+        private bool CheckForAddObjectErrors()
         {
-            
+            return true;
         }
 
-        private void CheckForAddMaterialErrors() {
+        private bool CheckForAddMaterialErrors() {
             if (argsArr.Length == 1 && !AddToModTextBox.Text.EndsWith(","))
             {
-                ErrorLabel.Text = "You're missing a comma, ','! We need a comma after our material's name to tell the computer we're making a list.";
-                ErrorPanel.BackColor = Color.Red;
+                ErrorLabel.Text = "You're missing a comma, ','! We need a comma after our material's name to tell the computer \r\nwe're making a list.";
             }
-            else if ((!argsArr[1].Replace(" ", "").All(Char.IsDigit) && argsArr[1].Replace(" ", "").Length > 1) || (argsArr.Length == 2 && AddToModTextBox.Text.EndsWith(",") && argsArr[1].Length == 0))
+            if (argsArr.Length >= 2)
             {
-                ErrorLabel.Text = "The second thing in the list should be a number, usually between 1 and 3.";
-                ErrorPanel.BackColor = Color.Red;
+                string desc = "The second thing in the list should be a number, between 1 and 3. \r\nThis is the Harvest Level of your material.\r\nYour material's harvest level needs to be as high as the harvest level of whatever block you're \r\ntrying to mine";
+                ErrorLabel.Text = AnalyzeNumberArgument(argsArr[1], 1, 3, false, desc, false);
             }
-            else if (argsArr[1].Replace(" ", "").All(Char.IsDigit) && !AddToModTextBox.Text.EndsWith(","))
+            if (argsArr.Length >= 3)
             {
-                ErrorLabel.Text = "We need another comma after our number to tell the computer we're giving it another number.";
-                ErrorPanel.BackColor = Color.Red;
+                string desc = "The third thing in the list should also be a number, between 1 and 1 million.\r\nThis is the Durability of your material.\r\nThe higher this is, the longer you can use a tool made out of your material before it breaks.";
+                ErrorLabel.Text = AnalyzeNumberArgument(argsArr[2], 1, 1000000, false, desc, false);
             }
+            if (argsArr.Length >= 4)
+            {
+                string desc = "The fourth thing in the list is another number, between 1 and 100.\r\nThis is the Harvest Speed of your material.\r\nThe higher this is, the faster you will break blocks with a tool made out of your material.\r\nThis number NEEDS to end with the letter F!";
+                ErrorLabel.Text = AnalyzeNumberArgument(argsArr[3], 1, 100, true, desc, false);
+            }
+            if (argsArr.Length >= 5)
+            {
+                string desc = "The fifth thing in the list is yet another number, between 1 and 2000.\r\nThis is the Damage of your material.\r\nThe higher this is, the faster you will kill enemies with tools make out of your material.\r\nThis number NEEDS to end with the letter F!";
+                ErrorLabel.Text = AnalyzeNumberArgument(argsArr[4], 1, 2000, true, desc, false);
+            }
+            if (argsArr.Length == 6)
+            {
+                string desc = "The sixth thing in the list is the final number, between 1 and 100.\r\nThis is the Enchantability of your material.\r\nThe higher this is, the more powerfully you can enchant tools made out of your material.";
+                ErrorLabel.Text = AnalyzeNumberArgument(argsArr[5], 1, 100, false, desc, true);
+                if (ErrorLabel.Text == "We're done with our list!") {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private string AnalyzeNumberArgument(string arg, int min, int max, bool isFloat, string description, bool finalArg) {
+            string ret = "Error";
+            string modArg = isFloat ? arg.TrimEnd('F').TrimStart(' ') : arg.TrimStart(' ');
+            if (string.IsNullOrWhiteSpace(modArg))
+            {
+                ret = description;
+            }
+            else if (!modArg.All(Char.IsDigit))
+            {
+                ret = "You have letters in your number that shouldn't be there!";
+            }
+            else if (!(int.Parse(modArg) >= min && int.Parse(modArg) <= max))
+            {
+                ret = "Your number is not between " + min + " and " + max + "!";
+            }
+            else if (isFloat && !arg.EndsWith("F"))
+            {
+                ret = "Your number needs to end with the letter F!";
+            }
+            else if (!finalArg)
+            {
+                ret = "Now we need another comma!";
+            }
+            else {
+                ret = "We're done with our list!";
+            }
+            return ret;
         }
 
         private void AddToModButton_Click(object sender, EventArgs e)

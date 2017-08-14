@@ -50,6 +50,8 @@
             this.MaterialPanel = new System.Windows.Forms.Panel();
             this.HarvestLevelTextBox = new System.Windows.Forms.TextBox();
             this.HarvestLevelLabel = new System.Windows.Forms.Label();
+            this.DurabilityTextBox = new System.Windows.Forms.TextBox();
+            this.DurabilityLabel = new System.Windows.Forms.Label();
             this.ErrorPanel.SuspendLayout();
             this.MaterialPanel.SuspendLayout();
             this.SuspendLayout();
@@ -197,6 +199,8 @@
             // 
             // MaterialPanel
             // 
+            this.MaterialPanel.Controls.Add(this.DurabilityTextBox);
+            this.MaterialPanel.Controls.Add(this.DurabilityLabel);
             this.MaterialPanel.Controls.Add(this.HarvestLevelTextBox);
             this.MaterialPanel.Controls.Add(this.HarvestLevelLabel);
             this.MaterialPanel.Location = new System.Drawing.Point(306, 153);
@@ -224,6 +228,26 @@
             this.HarvestLevelLabel.Size = new System.Drawing.Size(123, 20);
             this.HarvestLevelLabel.TabIndex = 7;
             this.HarvestLevelLabel.Text = "Harvest Level:";
+            // 
+            // DurabilityTextBox
+            // 
+            this.DurabilityTextBox.Enabled = false;
+            this.DurabilityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DurabilityTextBox.Location = new System.Drawing.Point(124, 48);
+            this.DurabilityTextBox.Name = "DurabilityTextBox";
+            this.DurabilityTextBox.Size = new System.Drawing.Size(100, 26);
+            this.DurabilityTextBox.TabIndex = 10;
+            this.DurabilityTextBox.Text = "???";
+            // 
+            // DurabilityLabel
+            // 
+            this.DurabilityLabel.AutoSize = true;
+            this.DurabilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DurabilityLabel.Location = new System.Drawing.Point(29, 51);
+            this.DurabilityLabel.Name = "DurabilityLabel";
+            this.DurabilityLabel.Size = new System.Drawing.Size(89, 20);
+            this.DurabilityLabel.TabIndex = 9;
+            this.DurabilityLabel.Text = "Durability:";
             // 
             // MainFormWindow
             // 
@@ -272,6 +296,8 @@
         private System.Windows.Forms.Panel MaterialPanel;
         private System.Windows.Forms.TextBox HarvestLevelTextBox;
         private System.Windows.Forms.Label HarvestLevelLabel;
+        private System.Windows.Forms.TextBox DurabilityTextBox;
+        private System.Windows.Forms.Label DurabilityLabel;
     }
 }
 
