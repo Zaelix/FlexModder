@@ -48,10 +48,16 @@
             this.ErrorPanel = new System.Windows.Forms.Panel();
             this.ErrorLabel = new System.Windows.Forms.Label();
             this.MaterialPanel = new System.Windows.Forms.Panel();
-            this.HarvestLevelTextBox = new System.Windows.Forms.TextBox();
-            this.HarvestLevelLabel = new System.Windows.Forms.Label();
             this.DurabilityTextBox = new System.Windows.Forms.TextBox();
             this.DurabilityLabel = new System.Windows.Forms.Label();
+            this.HarvestLevelTextBox = new System.Windows.Forms.TextBox();
+            this.HarvestLevelLabel = new System.Windows.Forms.Label();
+            this.HarvestSpeedTextBox = new System.Windows.Forms.TextBox();
+            this.HarvestSpeedLabel = new System.Windows.Forms.Label();
+            this.DamageTextBox = new System.Windows.Forms.TextBox();
+            this.DamageLabel = new System.Windows.Forms.Label();
+            this.EnchantabilityTextBox = new System.Windows.Forms.TextBox();
+            this.EnchantabilityLabel = new System.Windows.Forms.Label();
             this.ErrorPanel.SuspendLayout();
             this.MaterialPanel.SuspendLayout();
             this.SuspendLayout();
@@ -152,7 +158,7 @@
             // 
             this.ObjectTypeTextBox.Enabled = false;
             this.ObjectTypeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ObjectTypeTextBox.Location = new System.Drawing.Point(430, 116);
+            this.ObjectTypeTextBox.Location = new System.Drawing.Point(444, 116);
             this.ObjectTypeTextBox.Name = "ObjectTypeTextBox";
             this.ObjectTypeTextBox.Size = new System.Drawing.Size(100, 26);
             this.ObjectTypeTextBox.TabIndex = 6;
@@ -199,6 +205,12 @@
             // 
             // MaterialPanel
             // 
+            this.MaterialPanel.Controls.Add(this.EnchantabilityTextBox);
+            this.MaterialPanel.Controls.Add(this.EnchantabilityLabel);
+            this.MaterialPanel.Controls.Add(this.DamageTextBox);
+            this.MaterialPanel.Controls.Add(this.DamageLabel);
+            this.MaterialPanel.Controls.Add(this.HarvestSpeedTextBox);
+            this.MaterialPanel.Controls.Add(this.HarvestSpeedLabel);
             this.MaterialPanel.Controls.Add(this.DurabilityTextBox);
             this.MaterialPanel.Controls.Add(this.DurabilityLabel);
             this.MaterialPanel.Controls.Add(this.HarvestLevelTextBox);
@@ -209,31 +221,11 @@
             this.MaterialPanel.TabIndex = 10;
             this.MaterialPanel.Visible = false;
             // 
-            // HarvestLevelTextBox
-            // 
-            this.HarvestLevelTextBox.Enabled = false;
-            this.HarvestLevelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HarvestLevelTextBox.Location = new System.Drawing.Point(124, 16);
-            this.HarvestLevelTextBox.Name = "HarvestLevelTextBox";
-            this.HarvestLevelTextBox.Size = new System.Drawing.Size(100, 26);
-            this.HarvestLevelTextBox.TabIndex = 8;
-            this.HarvestLevelTextBox.Text = "???";
-            // 
-            // HarvestLevelLabel
-            // 
-            this.HarvestLevelLabel.AutoSize = true;
-            this.HarvestLevelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HarvestLevelLabel.Location = new System.Drawing.Point(3, 19);
-            this.HarvestLevelLabel.Name = "HarvestLevelLabel";
-            this.HarvestLevelLabel.Size = new System.Drawing.Size(123, 20);
-            this.HarvestLevelLabel.TabIndex = 7;
-            this.HarvestLevelLabel.Text = "Harvest Level:";
-            // 
             // DurabilityTextBox
             // 
             this.DurabilityTextBox.Enabled = false;
             this.DurabilityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DurabilityTextBox.Location = new System.Drawing.Point(124, 48);
+            this.DurabilityTextBox.Location = new System.Drawing.Point(138, 48);
             this.DurabilityTextBox.Name = "DurabilityTextBox";
             this.DurabilityTextBox.Size = new System.Drawing.Size(100, 26);
             this.DurabilityTextBox.TabIndex = 10;
@@ -243,11 +235,91 @@
             // 
             this.DurabilityLabel.AutoSize = true;
             this.DurabilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DurabilityLabel.Location = new System.Drawing.Point(29, 51);
+            this.DurabilityLabel.Location = new System.Drawing.Point(4, 51);
             this.DurabilityLabel.Name = "DurabilityLabel";
             this.DurabilityLabel.Size = new System.Drawing.Size(89, 20);
             this.DurabilityLabel.TabIndex = 9;
             this.DurabilityLabel.Text = "Durability:";
+            // 
+            // HarvestLevelTextBox
+            // 
+            this.HarvestLevelTextBox.Enabled = false;
+            this.HarvestLevelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestLevelTextBox.Location = new System.Drawing.Point(138, 16);
+            this.HarvestLevelTextBox.Name = "HarvestLevelTextBox";
+            this.HarvestLevelTextBox.Size = new System.Drawing.Size(100, 26);
+            this.HarvestLevelTextBox.TabIndex = 8;
+            this.HarvestLevelTextBox.Text = "???";
+            // 
+            // HarvestLevelLabel
+            // 
+            this.HarvestLevelLabel.AutoSize = true;
+            this.HarvestLevelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestLevelLabel.Location = new System.Drawing.Point(4, 19);
+            this.HarvestLevelLabel.Name = "HarvestLevelLabel";
+            this.HarvestLevelLabel.Size = new System.Drawing.Size(123, 20);
+            this.HarvestLevelLabel.TabIndex = 7;
+            this.HarvestLevelLabel.Text = "Harvest Level:";
+            // 
+            // HarvestSpeedTextBox
+            // 
+            this.HarvestSpeedTextBox.Enabled = false;
+            this.HarvestSpeedTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestSpeedTextBox.Location = new System.Drawing.Point(138, 80);
+            this.HarvestSpeedTextBox.Name = "HarvestSpeedTextBox";
+            this.HarvestSpeedTextBox.Size = new System.Drawing.Size(100, 26);
+            this.HarvestSpeedTextBox.TabIndex = 12;
+            this.HarvestSpeedTextBox.Text = "???";
+            // 
+            // HarvestSpeedLabel
+            // 
+            this.HarvestSpeedLabel.AutoSize = true;
+            this.HarvestSpeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestSpeedLabel.Location = new System.Drawing.Point(4, 83);
+            this.HarvestSpeedLabel.Name = "HarvestSpeedLabel";
+            this.HarvestSpeedLabel.Size = new System.Drawing.Size(133, 20);
+            this.HarvestSpeedLabel.TabIndex = 11;
+            this.HarvestSpeedLabel.Text = "Harvest Speed:";
+            // 
+            // DamageTextBox
+            // 
+            this.DamageTextBox.Enabled = false;
+            this.DamageTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DamageTextBox.Location = new System.Drawing.Point(138, 112);
+            this.DamageTextBox.Name = "DamageTextBox";
+            this.DamageTextBox.Size = new System.Drawing.Size(100, 26);
+            this.DamageTextBox.TabIndex = 14;
+            this.DamageTextBox.Text = "???";
+            // 
+            // DamageLabel
+            // 
+            this.DamageLabel.AutoSize = true;
+            this.DamageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DamageLabel.Location = new System.Drawing.Point(4, 115);
+            this.DamageLabel.Name = "DamageLabel";
+            this.DamageLabel.Size = new System.Drawing.Size(81, 20);
+            this.DamageLabel.TabIndex = 13;
+            this.DamageLabel.Text = "Damage:";
+            // 
+            // EnchantabilityTextBox
+            // 
+            this.EnchantabilityTextBox.Enabled = false;
+            this.EnchantabilityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EnchantabilityTextBox.Location = new System.Drawing.Point(138, 144);
+            this.EnchantabilityTextBox.Name = "EnchantabilityTextBox";
+            this.EnchantabilityTextBox.Size = new System.Drawing.Size(100, 26);
+            this.EnchantabilityTextBox.TabIndex = 16;
+            this.EnchantabilityTextBox.Text = "???";
+            // 
+            // EnchantabilityLabel
+            // 
+            this.EnchantabilityLabel.AutoSize = true;
+            this.EnchantabilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EnchantabilityLabel.Location = new System.Drawing.Point(4, 147);
+            this.EnchantabilityLabel.Name = "EnchantabilityLabel";
+            this.EnchantabilityLabel.Size = new System.Drawing.Size(127, 20);
+            this.EnchantabilityLabel.TabIndex = 15;
+            this.EnchantabilityLabel.Text = "Enchantability:";
             // 
             // MainFormWindow
             // 
@@ -298,6 +370,12 @@
         private System.Windows.Forms.Label HarvestLevelLabel;
         private System.Windows.Forms.TextBox DurabilityTextBox;
         private System.Windows.Forms.Label DurabilityLabel;
+        private System.Windows.Forms.TextBox HarvestSpeedTextBox;
+        private System.Windows.Forms.Label HarvestSpeedLabel;
+        private System.Windows.Forms.TextBox EnchantabilityTextBox;
+        private System.Windows.Forms.Label EnchantabilityLabel;
+        private System.Windows.Forms.TextBox DamageTextBox;
+        private System.Windows.Forms.Label DamageLabel;
     }
 }
 

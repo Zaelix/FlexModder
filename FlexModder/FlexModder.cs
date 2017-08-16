@@ -12,6 +12,7 @@ namespace FlexModder
 {
     public partial class MainFormWindow : Form
     {
+        String versionNum = "0.0.01";
         String[] argsArr;
         String objArgs = "";
         List<ModObject> modObjList = new List<ModObject>();
@@ -116,6 +117,7 @@ namespace FlexModder
             ObjectNameTextBox.Text = objName;
 
             CheckForAddErrors();
+
             if (ErrorLabel.Text == "No Errors Found")
             {
                 ErrorPanel.BackColor = Color.Lime;
@@ -134,11 +136,23 @@ namespace FlexModder
             if (argsArr.Length > 1)
             {
                 MaterialPanel.Visible = true;
-                HarvestLevelTextBox.Text = (argsArr[1] != "" && argsArr[1] != " ") ? argsArr[1].Replace(" ", "") : "???";
+                HarvestLevelTextBox.Text = !string.IsNullOrWhiteSpace(argsArr[1]) ? argsArr[1].Replace(" ", "") : "???";
             }
             if (argsArr.Length > 2)
             {
                 DurabilityTextBox.Text = !string.IsNullOrWhiteSpace(argsArr[2]) ? argsArr[2].Replace(" ", "") : "???";
+            }
+            if (argsArr.Length > 3)
+            {
+                HarvestSpeedTextBox.Text = !string.IsNullOrWhiteSpace(argsArr[3]) ? argsArr[3].Replace(" ", "") : "???";
+            }
+            if (argsArr.Length > 4)
+            {
+                DamageTextBox.Text = !string.IsNullOrWhiteSpace(argsArr[4]) ? argsArr[4].Replace(" ", "") : "???";
+            }
+            if (argsArr.Length > 5)
+            {
+                EnchantabilityTextBox.Text = !string.IsNullOrWhiteSpace(argsArr[5]) ? argsArr[5].Replace(" ", "") : "???";
             }
             else if (argsArr.Length == 1)
             {
@@ -168,16 +182,13 @@ namespace FlexModder
                 ErrorLabel.Text = AnalyzeStringArgument(argsArr[0], 0, false);
             }
             // Diverges for Materials and advanced Object error handling
-            else if (ObjectTypeTextBox.Text == "Material")
+            else if (ObjectTypeTextBox.Text == "Material" && argIsCorrect[0])
             {
                 argsAreComplete = CheckForAddMaterialErrors();
             }
-            else if (ObjectTypeTextBox.Text != "???" && argsArr.Length > 1)
+            else if (argIsCorrect[0] == true && argsArr.Length > 1)
             {
                 argsAreComplete = CheckForAddObjectErrors();
-            }
-            else {
-                argsAreComplete = true;
             }
             // Resumes common line ending error handling
             if (argsAreComplete || (argIsCorrect[0] == true && argsArr.Length == 1))
@@ -191,6 +202,14 @@ namespace FlexModder
             int count = 0;
             foreach (char c in source)
                 if (c == ')') count++;
+            return count;
+        }
+
+        private int QuoteCount(string arg) {
+            string source = arg;
+            int count = 0;
+            foreach (char c in source)
+                if (c == '"') count++;
             return count;
         }
 
@@ -286,6 +305,9 @@ namespace FlexModder
             {
                 ret = "Your name isn't in \"quotes\"!";
             }
+            else if (QuoteCount(arg) > 2) {
+                ret = "You have extra quotes!";
+            }
             else {
                 argIsCorrect[argNum] = true;
                 return "We did it!";
@@ -309,14 +331,7 @@ namespace FlexModder
             }
             else if (ParenthesisCount() > 1)
             {
-                string source = AddToModTextBox.Text;
-                int count = 0;
-                foreach (char c in source)
-                    if (c == ')') count++;
-                if (count > 1)
-                {
-                    ErrorLabel.Text = "You have an extra closing parenthesis, ')', in your line of code!";
-                }
+                ErrorLabel.Text = "You have an extra closing parenthesis, ')', in your line of code!";
             }
             else
             {
