@@ -48,16 +48,17 @@
             this.ErrorPanel = new System.Windows.Forms.Panel();
             this.ErrorLabel = new System.Windows.Forms.Label();
             this.MaterialPanel = new System.Windows.Forms.Panel();
+            this.EnchantabilityTextBox = new System.Windows.Forms.TextBox();
+            this.EnchantabilityLabel = new System.Windows.Forms.Label();
+            this.DamageTextBox = new System.Windows.Forms.TextBox();
+            this.DamageLabel = new System.Windows.Forms.Label();
+            this.HarvestSpeedTextBox = new System.Windows.Forms.TextBox();
+            this.HarvestSpeedLabel = new System.Windows.Forms.Label();
             this.DurabilityTextBox = new System.Windows.Forms.TextBox();
             this.DurabilityLabel = new System.Windows.Forms.Label();
             this.HarvestLevelTextBox = new System.Windows.Forms.TextBox();
             this.HarvestLevelLabel = new System.Windows.Forms.Label();
-            this.HarvestSpeedTextBox = new System.Windows.Forms.TextBox();
-            this.HarvestSpeedLabel = new System.Windows.Forms.Label();
-            this.DamageTextBox = new System.Windows.Forms.TextBox();
-            this.DamageLabel = new System.Windows.Forms.Label();
-            this.EnchantabilityTextBox = new System.Windows.Forms.TextBox();
-            this.EnchantabilityLabel = new System.Windows.Forms.Label();
+            this.SourceComboBox = new System.Windows.Forms.ComboBox();
             this.ErrorPanel.SuspendLayout();
             this.MaterialPanel.SuspendLayout();
             this.SuspendLayout();
@@ -221,6 +222,66 @@
             this.MaterialPanel.TabIndex = 10;
             this.MaterialPanel.Visible = false;
             // 
+            // EnchantabilityTextBox
+            // 
+            this.EnchantabilityTextBox.Enabled = false;
+            this.EnchantabilityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EnchantabilityTextBox.Location = new System.Drawing.Point(138, 144);
+            this.EnchantabilityTextBox.Name = "EnchantabilityTextBox";
+            this.EnchantabilityTextBox.Size = new System.Drawing.Size(100, 26);
+            this.EnchantabilityTextBox.TabIndex = 16;
+            this.EnchantabilityTextBox.Text = "???";
+            // 
+            // EnchantabilityLabel
+            // 
+            this.EnchantabilityLabel.AutoSize = true;
+            this.EnchantabilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EnchantabilityLabel.Location = new System.Drawing.Point(4, 147);
+            this.EnchantabilityLabel.Name = "EnchantabilityLabel";
+            this.EnchantabilityLabel.Size = new System.Drawing.Size(127, 20);
+            this.EnchantabilityLabel.TabIndex = 15;
+            this.EnchantabilityLabel.Text = "Enchantability:";
+            // 
+            // DamageTextBox
+            // 
+            this.DamageTextBox.Enabled = false;
+            this.DamageTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DamageTextBox.Location = new System.Drawing.Point(138, 112);
+            this.DamageTextBox.Name = "DamageTextBox";
+            this.DamageTextBox.Size = new System.Drawing.Size(100, 26);
+            this.DamageTextBox.TabIndex = 14;
+            this.DamageTextBox.Text = "???";
+            // 
+            // DamageLabel
+            // 
+            this.DamageLabel.AutoSize = true;
+            this.DamageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DamageLabel.Location = new System.Drawing.Point(4, 115);
+            this.DamageLabel.Name = "DamageLabel";
+            this.DamageLabel.Size = new System.Drawing.Size(81, 20);
+            this.DamageLabel.TabIndex = 13;
+            this.DamageLabel.Text = "Damage:";
+            // 
+            // HarvestSpeedTextBox
+            // 
+            this.HarvestSpeedTextBox.Enabled = false;
+            this.HarvestSpeedTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestSpeedTextBox.Location = new System.Drawing.Point(138, 80);
+            this.HarvestSpeedTextBox.Name = "HarvestSpeedTextBox";
+            this.HarvestSpeedTextBox.Size = new System.Drawing.Size(100, 26);
+            this.HarvestSpeedTextBox.TabIndex = 12;
+            this.HarvestSpeedTextBox.Text = "???";
+            // 
+            // HarvestSpeedLabel
+            // 
+            this.HarvestSpeedLabel.AutoSize = true;
+            this.HarvestSpeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HarvestSpeedLabel.Location = new System.Drawing.Point(4, 83);
+            this.HarvestSpeedLabel.Name = "HarvestSpeedLabel";
+            this.HarvestSpeedLabel.Size = new System.Drawing.Size(133, 20);
+            this.HarvestSpeedLabel.TabIndex = 11;
+            this.HarvestSpeedLabel.Text = "Harvest Speed:";
+            // 
             // DurabilityTextBox
             // 
             this.DurabilityTextBox.Enabled = false;
@@ -261,71 +322,21 @@
             this.HarvestLevelLabel.TabIndex = 7;
             this.HarvestLevelLabel.Text = "Harvest Level:";
             // 
-            // HarvestSpeedTextBox
+            // SourceComboBox
             // 
-            this.HarvestSpeedTextBox.Enabled = false;
-            this.HarvestSpeedTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HarvestSpeedTextBox.Location = new System.Drawing.Point(138, 80);
-            this.HarvestSpeedTextBox.Name = "HarvestSpeedTextBox";
-            this.HarvestSpeedTextBox.Size = new System.Drawing.Size(100, 26);
-            this.HarvestSpeedTextBox.TabIndex = 12;
-            this.HarvestSpeedTextBox.Text = "???";
-            // 
-            // HarvestSpeedLabel
-            // 
-            this.HarvestSpeedLabel.AutoSize = true;
-            this.HarvestSpeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HarvestSpeedLabel.Location = new System.Drawing.Point(4, 83);
-            this.HarvestSpeedLabel.Name = "HarvestSpeedLabel";
-            this.HarvestSpeedLabel.Size = new System.Drawing.Size(133, 20);
-            this.HarvestSpeedLabel.TabIndex = 11;
-            this.HarvestSpeedLabel.Text = "Harvest Speed:";
-            // 
-            // DamageTextBox
-            // 
-            this.DamageTextBox.Enabled = false;
-            this.DamageTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DamageTextBox.Location = new System.Drawing.Point(138, 112);
-            this.DamageTextBox.Name = "DamageTextBox";
-            this.DamageTextBox.Size = new System.Drawing.Size(100, 26);
-            this.DamageTextBox.TabIndex = 14;
-            this.DamageTextBox.Text = "???";
-            // 
-            // DamageLabel
-            // 
-            this.DamageLabel.AutoSize = true;
-            this.DamageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DamageLabel.Location = new System.Drawing.Point(4, 115);
-            this.DamageLabel.Name = "DamageLabel";
-            this.DamageLabel.Size = new System.Drawing.Size(81, 20);
-            this.DamageLabel.TabIndex = 13;
-            this.DamageLabel.Text = "Damage:";
-            // 
-            // EnchantabilityTextBox
-            // 
-            this.EnchantabilityTextBox.Enabled = false;
-            this.EnchantabilityTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EnchantabilityTextBox.Location = new System.Drawing.Point(138, 144);
-            this.EnchantabilityTextBox.Name = "EnchantabilityTextBox";
-            this.EnchantabilityTextBox.Size = new System.Drawing.Size(100, 26);
-            this.EnchantabilityTextBox.TabIndex = 16;
-            this.EnchantabilityTextBox.Text = "???";
-            // 
-            // EnchantabilityLabel
-            // 
-            this.EnchantabilityLabel.AutoSize = true;
-            this.EnchantabilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EnchantabilityLabel.Location = new System.Drawing.Point(4, 147);
-            this.EnchantabilityLabel.Name = "EnchantabilityLabel";
-            this.EnchantabilityLabel.Size = new System.Drawing.Size(127, 20);
-            this.EnchantabilityLabel.TabIndex = 15;
-            this.EnchantabilityLabel.Text = "Enchantability:";
+            this.SourceComboBox.FormattingEnabled = true;
+            this.SourceComboBox.Location = new System.Drawing.Point(800, 13);
+            this.SourceComboBox.Name = "SourceComboBox";
+            this.SourceComboBox.Size = new System.Drawing.Size(172, 21);
+            this.SourceComboBox.TabIndex = 11;
+            this.SourceComboBox.SelectedIndexChanged += new System.EventHandler(this.SourceComboBox_SelectedIndexChanged);
             // 
             // MainFormWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 614);
+            this.Controls.Add(this.SourceComboBox);
             this.Controls.Add(this.MaterialPanel);
             this.Controls.Add(this.ErrorPanel);
             this.Controls.Add(this.ObjectNameTextBox);
@@ -376,6 +387,7 @@
         private System.Windows.Forms.Label EnchantabilityLabel;
         private System.Windows.Forms.TextBox DamageTextBox;
         private System.Windows.Forms.Label DamageLabel;
+        private System.Windows.Forms.ComboBox SourceComboBox;
     }
 }
 

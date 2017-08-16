@@ -17,6 +17,7 @@ namespace FlexModder
         String objArgs = "";
         List<ModObject> modObjList = new List<ModObject>();
         bool[] argIsCorrect = new bool[10];
+        FlexMod myMod;
 
         public MainFormWindow()
         {
@@ -26,10 +27,12 @@ namespace FlexModder
         private void MainForm_Load(object sender, EventArgs e)
         {
             PopulateModSummary();
+            myMod.findFiles();
         }
 
         private void PopulateModSummary()
         {
+            myMod = new FlexMod(this);
             modObjList.Add(new ModObject("Waffle Block", "Block"));
             modObjList.Add(new ModObject("Waffle Sword", "Sword"));
             String[] wbArr = { "Waffle Block", "Block" };
@@ -45,6 +48,15 @@ namespace FlexModder
         private void ModSummaryListViewBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public void AddSourceToList(string src) {
+            SourceComboBox.Items.Add(src);
+        }
+
+        public void SetSelectedSource(string src)
+        {
+            SourceComboBox.SelectedItem = SourceComboBox.Items[SourceComboBox.Items.IndexOf(src)];
         }
 
         private void ClearArgCorrectBoolArrays() {
@@ -355,30 +367,35 @@ namespace FlexModder
             // Makes the relevant changes to the Forge Mod source files
             if (type == "Block")
             {
-                FlexMod.addObject(name, "Block", type, " ");
+                myMod.addObject(name, "Block", type, " ");
             }
             else if (type == "Sword")
             {
                 if (argsArr.Length > 1)
                 {
-                    FlexMod.addObject(name, "Item", type, argsArr[1]);
+                    myMod.addObject(name, "Item", type, argsArr[1]);
                 }
                 else
                 {
-                    FlexMod.addObject(name, "Item", type, " ");
+                    myMod.addObject(name, "Item", type, " ");
                 }
             }
             else if (type == "Bow")
             {
-                FlexMod.addObject(name, "Item", type, " ");
+                myMod.addObject(name, "Item", type, " ");
             }
             else if (type == "Material" && argsArr.Length > 5)
             {
-                FlexMod.addMaterial(name, int.Parse(argsArr[1]), int.Parse(argsArr[2]), int.Parse(argsArr[3]), int.Parse(argsArr[4]), int.Parse(argsArr[5]));
+                myMod.addMaterial(name, int.Parse(argsArr[1]), int.Parse(argsArr[2]), int.Parse(argsArr[3]), int.Parse(argsArr[4]), int.Parse(argsArr[5]));
             }
 
             // Clears the Add text input field
             AddToModTextBox.Text = "";
+        }
+
+        private void SourceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -9,12 +9,17 @@ namespace FlexModder
 {
     class FlexMod
     {
-        static String campPath;
-        static String mainRegistry;
-        static String itemRegistry;
-        static String blockRegistry;
+        String campPath;
+        String mainRegistry;
+        String itemRegistry;
+        String blockRegistry;
+        MainFormWindow mainWindow;
 
-        public static Object[] findInsertingSpace(String myFile, String name, String searchString, String insertString, int num, String fileContent)
+        public FlexMod(MainFormWindow mainWin) {
+            this.mainWindow = mainWin;
+        }
+
+        public Object[] findInsertingSpace(String myFile, String name, String searchString, String insertString, int num, String fileContent)
         {
             int number_of_lines = 0;
 
@@ -39,7 +44,7 @@ namespace FlexModder
 		    return values;
 	    }
 
-        public static String finishRead(String myFile, int num, String fileContent)
+        public String finishRead(String myFile, int num, String fileContent)
         {
 
             int number_of_lines = 0;
@@ -60,7 +65,7 @@ namespace FlexModder
 		    return fileContent;
 	    }
 
-        public static String findFiles()
+        public String findFiles()
         {
             String myPath;
 
@@ -68,42 +73,57 @@ namespace FlexModder
             String dDrive = "D:/src/main/java/com/camp/";
             String eDrive = "E:/src/main/java/com/camp/";
             String fDrive = "F:/src/main/java/com/camp/";
+            string[] drives = new string[4];
+            drives[0] = testDrive;
+            drives[1] = dDrive;
+            drives[2] = eDrive;
+            drives[3] = fDrive;
 
-		    if (Directory.Exists(testDrive)){
-			    myPath = testDrive;
-		    }
-		    else if (Directory.Exists(dDrive))
-            {
-			    myPath = dDrive;
-		    }
-		    else if (Directory.Exists(eDrive))
-            {
-			    myPath = eDrive;
-		    }
-		    else if (Directory.Exists(fDrive))
-            {
-			    myPath = fDrive;
-		    }
-		    else{
-			    throw new FileNotFoundException("Yikes! All file paths are invalid!");
-		    }
-		
-		    if (myPath == testDrive)
-            {
-			    mainRegistry = myPath + "/MainRegistry.java";
-			    itemRegistry = myPath + "/ItemRegistry.java";
-			    blockRegistry = myPath + "/BlockRegistry.java";
-		    }
-		    else{
-			    mainRegistry = myPath + "/main/MainRegistry.java";
-			    itemRegistry = myPath + "/item/ItemRegistry.java";
-			    blockRegistry = myPath + "/block/BlockRegistry.java";
-		    }
-		    campPath = myPath;
+            string chosen = DisplaySources(drives);
+
+            myPath = chosen != "" ? chosen : "No Paths Found";
+
+            SetSources(myPath);
+
 		    return myPath;
 	    }
 
-        public static Boolean isRedundant(String myFile, String searchString) 
+        public void SetSources(string path)
+        {
+            String testDrive = "E:/Desktop Stuff/Programming/ForgeMod Test Folder/";
+            if (path == testDrive)
+            {
+                mainRegistry = path + "/MainRegistry.java";
+                itemRegistry = path + "/ItemRegistry.java";
+                blockRegistry = path + "/BlockRegistry.java";
+            }
+            else
+            {
+                mainRegistry = path + "/main/MainRegistry.java";
+                itemRegistry = path + "/item/ItemRegistry.java";
+                blockRegistry = path + "/block/BlockRegistry.java";
+            }
+            campPath = path;
+        }
+
+        public string DisplaySources(string[] src) {
+            string[] source = new string[src.Length];
+            int count = 0;
+            foreach (string str in src)
+            {
+                if (Directory.Exists(str))
+                {
+                    source[count] = str;
+                    mainWindow.AddSourceToList(str);
+                    count++;
+                }
+            }
+            string ret = (source[0] != null) ? source[0] : "No Source Detected";
+            mainWindow.SetSelectedSource(ret);
+            return ret;
+        }
+
+        public Boolean isRedundant(String myFile, String searchString) 
         {
             StreamReader sr = new StreamReader(myFile);
 
@@ -121,7 +141,7 @@ namespace FlexModder
 		    return false;
 	    }
 
-        public static void addMaterial(String name, int harvestLevel, int durability, float harvestSpeed, float damage, int enchantability)
+        public void addMaterial(String name, int harvestLevel, int durability, float harvestSpeed, float damage, int enchantability)
         {
             findFiles();
             String typeFile = mainRegistry;
@@ -149,7 +169,7 @@ namespace FlexModder
             }
 	    }
 
-        public static void addObject(String name, String category, String type, String material)
+        public void addObject(String name, String category, String type, String material)
         {
             findFiles();
             String typeFile;
@@ -236,7 +256,7 @@ namespace FlexModder
 		    }
 	    }
 
-        public static void writeFile(String myFile, String fileContent)
+        public void writeFile(String myFile, String fileContent)
         {
             FileStream outFileStream = new FileStream(myFile, FileMode.Create, FileAccess.Write);
 
