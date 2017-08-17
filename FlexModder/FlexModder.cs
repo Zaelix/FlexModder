@@ -12,7 +12,7 @@ namespace FlexModder
 {
     public partial class MainFormWindow : Form
     {
-        String versionNum = "0.0.01";
+        String versionNum = "0.0.03";
         String[] argsArr;
         String objArgs = "";
         List<ModObject> modObjList = new List<ModObject>();
@@ -33,16 +33,7 @@ namespace FlexModder
         private void PopulateModSummary()
         {
             myMod = new FlexMod(this);
-            modObjList.Add(new ModObject("Waffle Block", "Block"));
-            modObjList.Add(new ModObject("Waffle Sword", "Sword"));
-            String[] wbArr = { "Waffle Block", "Block" };
-            String[] wsArr = { "Waffle Sword", "Sword" };
-            ListViewItem waffleBlockLVI = new ListViewItem(wbArr);
-            ListViewItem waffleSwordLVI = new ListViewItem(wsArr);
-            waffleBlockLVI.Group = ModSummaryListViewBox.Groups[0];
-            waffleSwordLVI.Group = ModSummaryListViewBox.Groups[1];
-            ModSummaryListViewBox.Items.Add(waffleBlockLVI);
-            ModSummaryListViewBox.Items.Add(waffleSwordLVI);
+            
         }
 
         private void ModSummaryListViewBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -351,6 +342,14 @@ namespace FlexModder
             }
         }
 
+        public void AddToModSummary(string name, string type) {
+            modObjList.Add(new ModObject(name, type));
+            String[] lviArr = { name, type };
+            ListViewItem lvi = new ListViewItem(lviArr);
+            lvi.Group = ModSummaryListViewBox.Groups[0];
+            ModSummaryListViewBox.Items.Add(lvi);
+        }
+
         private void AddToModButton_Click(object sender, EventArgs e)
         {
             // Captures the object properties
@@ -358,11 +357,7 @@ namespace FlexModder
             String type = ObjectTypeTextBox.Text;
 
             // Adds the new object to the summary
-            modObjList.Add(new ModObject(ObjectNameTextBox.Text, ObjectTypeTextBox.Text));
-            String[] lviArr = { ObjectNameTextBox.Text, ObjectTypeTextBox.Text };
-            ListViewItem lvi = new ListViewItem(lviArr);
-            lvi.Group = ModSummaryListViewBox.Groups[0];
-            ModSummaryListViewBox.Items.Add(lvi);
+            AddToModSummary(name, type);
 
             // Makes the relevant changes to the Forge Mod source files
             if (type == "Block")

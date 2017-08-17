@@ -104,6 +104,7 @@ namespace FlexModder
                 blockRegistry = path + "/block/BlockRegistry.java";
             }
             campPath = path;
+            ParseFilesForSummary();
         }
 
         public string DisplaySources(string[] src) {
@@ -121,6 +122,73 @@ namespace FlexModder
             string ret = (source[0] != null) ? source[0] : "No Source Detected";
             mainWindow.SetSelectedSource(ret);
             return ret;
+        }
+
+        public void ParseFilesForSummary() {
+            ParseRegForSummary(mainRegistry, "public static final Item.ToolMaterial", "Material");
+            ParseItemRegForSummary();
+            ParseBlockRegForSummary();
+        }
+
+        public void ParseRegForSummary(string file, string searchTerm, string type)
+        {
+            StreamReader sr = new StreamReader(file);
+
+            String lineContents = "";
+            lineContents = sr.ReadLine();
+            while (sr.Peek() >= 0)
+            {
+                if (lineContents.Contains(searchTerm))
+                {
+                    string[] line = lineContents.Split(' ');
+                    mainWindow.AddToModSummary(line[4], type);
+                }
+                lineContents = sr.ReadLine();
+            }
+            sr.Close();
+        }
+
+        public void ParseItemRegForSummary()
+        {
+            StreamReader sr = new StreamReader(itemRegistry);
+            List<ModObject> objs = new List<ModObject>();
+
+            String lineContents = "";
+            lineContents = sr.ReadLine();
+            while (sr.Peek() >= 0)
+            {
+                if (lineContents.Contains("public static ") && !lineContents.Contains("public static void"))
+                {
+                    string[] line = lineContents.Split(' ');
+                    ModObject modObj = new ModObject(line[3].Replace(";", ""), line[2]);
+                    objs.Add(modObj);
+                }
+                foreach (ModObject ob in objs) {
+                    // Check for initialization
+                    if (lineContents.Contains(ob.name + " = new "))
+                    {
+                        ob.Init = true;
+                    }
+                    // Check for registration
+                    if (lineContents.Contains("GameRegistry.registerItem(" + ob.name+", "+ob.name+ ".getUnlocalizedName());"))
+                    {
+                        ob.Regi = true;
+                    }
+                    // Adds all valid mod objects with init and regi complete to the Mod Summary List
+                    if (ob.Init & ob.Regi && !ob.WasAdded)
+                    {
+                        ob.WasAdded = true;
+                        mainWindow.AddToModSummary(ob.name, ob.Type);
+                    }
+                }
+                lineContents = sr.ReadLine();
+            }
+            sr.Close();
+        }
+
+        public void ParseBlockRegForSummary()
+        {
+
         }
 
         public Boolean isRedundant(String myFile, String searchString) 
@@ -143,7 +211,7 @@ namespace FlexModder
 
         public void addMaterial(String name, int harvestLevel, int durability, float harvestSpeed, float damage, int enchantability)
         {
-            findFiles();
+            //findFiles();
             String typeFile = mainRegistry;
 
             String decSearchString = "Material Declaration Space";
@@ -171,7 +239,7 @@ namespace FlexModder
 
         public void addObject(String name, String category, String type, String material)
         {
-            findFiles();
+            //findFiles();
             String typeFile;
             String initInsertEnd;
             String nameSanitized = name.ToLower().Replace(" ", "").Replace("Sword", "").Replace("Block", "").Replace("Bow", "").Replace("sword", "").Replace("block", "").Replace("bow", "");

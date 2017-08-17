@@ -325,9 +325,9 @@
             // SourceComboBox
             // 
             this.SourceComboBox.FormattingEnabled = true;
-            this.SourceComboBox.Location = new System.Drawing.Point(800, 13);
+            this.SourceComboBox.Location = new System.Drawing.Point(716, 13);
             this.SourceComboBox.Name = "SourceComboBox";
-            this.SourceComboBox.Size = new System.Drawing.Size(172, 21);
+            this.SourceComboBox.Size = new System.Drawing.Size(256, 21);
             this.SourceComboBox.TabIndex = 11;
             this.SourceComboBox.SelectedIndexChanged += new System.EventHandler(this.SourceComboBox_SelectedIndexChanged);
             // 
