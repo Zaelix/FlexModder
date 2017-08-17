@@ -71,13 +71,15 @@ namespace FlexModder
 
             String testDrive = "E:/Desktop Stuff/Programming/ForgeMod Test Folder/";
             String dDrive = "D:/src/main/java/com/camp/";
-            String eDrive = "E:/src/main/java/com/camp/";
-            String fDrive = "F:/src/main/java/com/camp/";
-            string[] drives = new string[4];
+            string[] drives = new string[27];
             drives[0] = testDrive;
-            drives[1] = dDrive;
-            drives[2] = eDrive;
-            drives[3] = fDrive;
+            int count = 1;
+            for (char c = 'A'; c <= 'Z'; c++)
+            {
+                drives[count] = c+":/src/main/java/com/camp/";
+                Console.Write("Adding " + drives[count] + " to the directory list. \r\n");
+                count++;
+            }
 
             string chosen = DisplaySources(drives);
 

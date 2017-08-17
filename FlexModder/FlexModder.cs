@@ -12,7 +12,7 @@ namespace FlexModder
 {
     public partial class MainFormWindow : Form
     {
-        String versionNum = "0.0.04";
+        String versionNum = "0.0.05";
         String[] argsArr;
         String objArgs = "";
         List<ModObject> modObjList = new List<ModObject>();
