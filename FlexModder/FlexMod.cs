@@ -125,14 +125,14 @@ namespace FlexModder
         }
 
         public void ParseFilesForSummary() {
-            ParseRegForSummary(mainRegistry, "public static final Item.ToolMaterial", "Material");
-            ParseItemRegForSummary();
-            ParseBlockRegForSummary();
+            ParseMainRegForSummary("public static final Item.ToolMaterial", "Material");
+            ParseObjectRegForSummary(itemRegistry);
+            ParseObjectRegForSummary(blockRegistry);
         }
 
-        public void ParseRegForSummary(string file, string searchTerm, string type)
+        public void ParseMainRegForSummary(string searchTerm, string type)
         {
-            StreamReader sr = new StreamReader(file);
+            StreamReader sr = new StreamReader(mainRegistry);
 
             String lineContents = "";
             lineContents = sr.ReadLine();
@@ -148,9 +148,9 @@ namespace FlexModder
             sr.Close();
         }
 
-        public void ParseItemRegForSummary()
+        public void ParseObjectRegForSummary(string file)
         {
-            StreamReader sr = new StreamReader(itemRegistry);
+            StreamReader sr = new StreamReader(file);
             List<ModObject> objs = new List<ModObject>();
 
             String lineContents = "";
@@ -170,7 +170,7 @@ namespace FlexModder
                         ob.Init = true;
                     }
                     // Check for registration
-                    if (lineContents.Contains("GameRegistry.registerItem(" + ob.name+", "+ob.name+ ".getUnlocalizedName());"))
+                    if (lineContents.Contains("GameRegistry.register"+ob.Type+"(" + ob.name+", "+ob.name+ ".getUnlocalizedName());"))
                     {
                         ob.Regi = true;
                     }
