@@ -12,7 +12,7 @@ namespace FlexModder
 {
     public partial class MainFormWindow : Form
     {
-        String versionNum = "0.0.05";
+        String versionNum = "0.0.06";
         String[] argsArr;
         String objArgs = "";
         List<ModObject> modObjList = new List<ModObject>();
@@ -27,13 +27,16 @@ namespace FlexModder
         private void MainForm_Load(object sender, EventArgs e)
         {
             PopulateModSummary();
-            myMod.findFiles();
+            ContextMenuStrip cms = new ContextMenuStrip();
+            cms.Items.Add("Remove");
+            this.ModSummaryListViewBox.ContextMenuStrip = cms;
         }
 
         private void PopulateModSummary()
         {
             myMod = new FlexMod(this);
-            
+            myMod.findFiles();
+            myMod.ParseFilesForSummary();
         }
 
         private void ModSummaryListViewBox_SelectedIndexChanged(object sender, EventArgs e)

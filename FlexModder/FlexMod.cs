@@ -70,7 +70,6 @@ namespace FlexModder
             String myPath;
 
             String testDrive = "E:/Desktop Stuff/Programming/ForgeMod Test Folder/";
-            String dDrive = "D:/src/main/java/com/camp/";
             string[] drives = new string[27];
             drives[0] = testDrive;
             int count = 1;
@@ -106,7 +105,6 @@ namespace FlexModder
                 blockRegistry = path + "/block/BlockRegistry.java";
             }
             campPath = path;
-            ParseFilesForSummary();
         }
 
         public string DisplaySources(string[] src) {

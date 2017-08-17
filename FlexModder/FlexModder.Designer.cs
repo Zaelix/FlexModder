@@ -32,7 +32,6 @@
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Swords", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Bows", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Tools", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormWindow));
             this.ModSummaryLabel = new System.Windows.Forms.Label();
             this.ModSummaryListViewBox = new System.Windows.Forms.ListView();
@@ -78,6 +77,7 @@
             this.ModSummaryListViewBox.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ObjectNames,
             this.ObjectTypes});
+            this.ModSummaryListViewBox.Cursor = System.Windows.Forms.Cursors.Default;
             listViewGroup1.Header = "Blocks";
             listViewGroup1.Name = "SummaryGroup_Block";
             listViewGroup2.Header = "Swords";
@@ -91,8 +91,6 @@
             listViewGroup2,
             listViewGroup3,
             listViewGroup4});
-            this.ModSummaryListViewBox.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
             this.ModSummaryListViewBox.Location = new System.Drawing.Point(17, 36);
             this.ModSummaryListViewBox.MultiSelect = false;
             this.ModSummaryListViewBox.Name = "ModSummaryListViewBox";
